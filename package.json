@@ -1,0 +1,25 @@
+{
+  "name": "emakina-mongo-queries-ks",
+  "version": "1.0.0",
+  "description": "Emakina.RS Knowledge Share: MongoDB for JS developers - Queries in depth",
+  "scripts": {
+    "seedMovies": "mongoimport -d emakinaks -c movies data/movies.json"
+  },
+  "keywords": [
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "Nebojsa Jakovljevic",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/mongodb": "^3.5.25",
+    "@types/node": "^14.0.24",
+    "eslint": "^7.5.0"
+  },
+  "dependencies": {
+    "mongodb": "^3.5.9"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  }
+}
