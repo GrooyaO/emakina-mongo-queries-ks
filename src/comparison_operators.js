@@ -15,7 +15,7 @@ const config = {
 
     const collection = client.db(DB_NAME).collection(DB_COLLECTION);
 
-    // runtime attribute less or equall to 30
+    // runtime attribute less or equal to 30
     const runtime30orLess = await collection
       .find({
         runtime: { $lte: 30 },
@@ -39,6 +39,18 @@ const config = {
       })
       .count();
     console.log(`📽 ${roundYears} movies, released in round years. [${years.join(', ')}]\n\n`);
+
+    // regular expressions
+    const startsWithThe = await collection.find({
+      title: {
+        // $regex: /^The /,
+        // $regex: /^(A|An) /,
+        $regex: /\b(wo)?m[ae]n\b/i,
+      },
+    }).count();
+
+    console.log(`🎥 ${startsWithThe} movies, which title starts with 'The'\n\n`);
+
   } catch (error) {
     console.error(error.message);
     process.exit(1);
