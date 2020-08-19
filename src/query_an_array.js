@@ -38,6 +38,20 @@ const config = {
 
     console.log(`🇷🇸 🇬🇧 ${serbianAndEnglish} movies, where Serbian and English are in language array.\n\n`);
 
+    // Any of array elements is any of array element
+    const actors = [
+        'Bruce Willis',
+        'Jim Carrey',
+        'Quentin Tarantino',
+    ];
+    const actorsResult = await collection.find({
+      cast: {
+        $in: actors,
+      },
+    }).count();
+
+    console.log(`🎥 ${actorsResult} movies, where one of ${actors.join(', ')} is in cast.\n\n`)
+
     // get documents where array length is 3
     const threeLanguage = await collection.find({
       languages: {
