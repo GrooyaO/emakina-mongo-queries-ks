@@ -50,9 +50,25 @@ const config = {
       .count();
     console.log(`🏆 ${highRatingAndVotesOrAwards} movies with high rating and votes OR at least 20 awards\n\n`);
 
-    // TODO: NOT
+    // NOT
+    const nonUSAMovies = await collection
+      .find({
+        countries: {
+          $not: { $eq: 'USA' },
+        },
+      })
+      .count();
 
-    // TODO: NOR
+    console.log(`🌍 ${nonUSAMovies} movies outside of USA.\n\n`);
+
+    // NOR
+    const nonUSAAndCanada = await collection
+      .find({
+        $nor: [{ countries: 'USA' }, { countries: 'Canada' }],
+      })
+      .count();
+
+    console.log(`🚫 🇺🇸 🇨🇦 ${nonUSAAndCanada} movies outside USA and Canada.\n\n`);
   } catch (error) {
     console.error(error.message);
     process.exit(1);
