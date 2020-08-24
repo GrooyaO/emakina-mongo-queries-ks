@@ -15,7 +15,7 @@ const config = {
 
     const collection = client.db(DB_NAME).collection(DB_COLLECTION);
 
-    const result = await collection
+    const dieHardResults = await collection
       .find({
         $text: {
           // $search: 'christmas die hard',
@@ -27,7 +27,7 @@ const config = {
         'imdb.votes': { $gte: 1000 },
       })
       .sort({ 'imdb.rating': -1 })
-      .limit(10)
+      .limit(3)
       .map(movie => {
         return {
           title: movie.title,
@@ -38,7 +38,27 @@ const config = {
       })
       .toArray();
 
-    console.log(result);
+    console.log(dieHardResults);
+
+    console.log('================================================');
+
+    // search and *project*
+    const warResults = await collection
+      .find({
+        $text: {
+          $search: 'war',
+          $caseSensitive: false,
+        },
+      })
+      .project({
+        _id: 0,
+        title: 1,
+      })
+      .sort({ 'imdb.rating': -1 })
+      .limit(5)
+      .toArray();
+
+    console.log(warResults);
   } catch (error) {
     console.error(error.message);
     process.exit(1);
