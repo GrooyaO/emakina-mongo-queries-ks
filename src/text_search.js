@@ -38,9 +38,8 @@ const config = {
       })
       .toArray();
 
+    console.log('\n\nDie Hard results\n================');
     console.log(dieHardResults);
-
-    console.log('================================================');
 
     // search and *project*
     const warResults = await collection
@@ -53,12 +52,36 @@ const config = {
       .project({
         _id: 0,
         title: 1,
+        year: 1,
       })
       .sort({ 'imdb.rating': -1 })
       .limit(5)
       .toArray();
 
-    console.log(warResults);
+    console.log('\n\nSearch and project\n==================');
+    console.table(warResults);
+
+    // sort by score
+    const resultWithScore = await collection
+      .find({
+        $text: {
+          $search: 'Godfather',
+          $caseSensitive: false,
+        },
+      })
+      .project(
+        {
+          score: { $meta: 'textScore' },
+          _id: 0,
+          title: 1,
+        },
+      )
+      .sort({ score: { $meta: 'textScore' } })
+      .limit(5)
+      .toArray();
+
+    console.log('\n\nSorted by score\n===============');
+    console.table(resultWithScore);
   } catch (error) {
     console.error(error.message);
     process.exit(1);
