@@ -26,7 +26,7 @@ const config = {
     // runtime attribute greater than 90
     const runtimeGreaterThan90 = await collection
       .find({
-        runtime: { $gt: 30 },
+        runtime: { $gt: 90 },
       })
       .count();
     console.log(`🎬 ${runtimeGreaterThan90} movies, longer than 90 minutes.\n\n`);
@@ -43,9 +43,9 @@ const config = {
     // regular expressions
     const startsWithThe = await collection.find({
       title: {
-        // $regex: /^The /,
+        $regex: /^The /,
         // $regex: /^(A|An) /,
-        $regex: /\b(wo)?m[ae]n\b/i,
+        // $regex: /\b(wo)?m[ae]n\b/i,
       },
     }).count();
 
