@@ -18,7 +18,10 @@ const config = {
     // explicit AND
     const highRatingAndVotes1 = await collection
       .find({
-        $and: [{ 'imdb.votes': { $gte: 10000 } }, { 'imdb.rating': { $gt: 8.5 } }],
+        $and: [
+          { 'imdb.votes': { $gte: 10000 } },
+          { 'imdb.rating': { $gt: 8.5 } },
+        ],
       })
       .count();
     console.log(`📈 ${highRatingAndVotes1} movies with rating over 8.5 AND at least 10000 votes.\n\n`);
@@ -35,7 +38,10 @@ const config = {
     // OR
     const highRatingOrAwards = await collection
       .find({
-        $or: [{ 'imdb.rating': { $gt: 9 } }, { 'awards.wins': { $gte: 10 } }],
+        $or: [
+          { 'imdb.rating': { $gt: 9 } },
+          { 'awards.wins': { $gte: 10 } },
+        ],
       })
       .count();
     console.log(`🏆 ${highRatingOrAwards} movies with rating over 9 OR at least 10 awards\n`);
@@ -43,7 +49,11 @@ const config = {
     const highRatingAndVotesOrAwards = await collection
       .find({
         $or: [
-          { $and: [{ 'imdb.rating': { $gt: 9 } }, { 'imdb.votes': { $gte: 10000 } }] },
+          { $and: [
+            { 'imdb.rating': { $gt: 9 } },
+            { 'imdb.votes': { $gte: 10000 } },
+          ],
+        },
           { 'awards.wins': { $gte: 20 } },
         ],
       })
@@ -64,7 +74,10 @@ const config = {
     // NOR
     const nonUSAAndCanada = await collection
       .find({
-        $nor: [{ countries: 'USA' }, { countries: 'Canada' }],
+        $nor: [
+          { countries: 'USA' },
+          { countries: 'Canada' },
+        ],
       })
       .count();
 

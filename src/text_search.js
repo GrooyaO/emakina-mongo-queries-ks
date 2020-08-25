@@ -28,7 +28,7 @@ const config = {
       })
       .sort({ 'imdb.rating': -1 })
       .limit(3)
-      .map(movie => {
+      .map((movie) => {
         return {
           title: movie.title,
           year: movie.year,
@@ -69,13 +69,11 @@ const config = {
           $caseSensitive: false,
         },
       })
-      .project(
-        {
-          score: { $meta: 'textScore' },
-          _id: 0,
-          title: 1,
-        },
-      )
+      .project({
+        score: { $meta: 'textScore' },
+        _id: 0,
+        title: 1,
+      })
       .sort({ score: { $meta: 'textScore' } })
       .limit(5)
       .toArray();
